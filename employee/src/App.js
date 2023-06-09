@@ -61,11 +61,12 @@ function App() {
           <div className="flex flex-wrap justify-center">
             {employees.map((employee) => {
               console.log(employee);
+              console.log(uuidv4())
               return (
               <Employee
                 key={uuidv4()}
                 name={employee.name}
-                roel={employee.role}
+                role={employee.role}
                 img={employee.img}
                 alt="prifile picture"
               />

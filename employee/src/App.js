@@ -44,6 +44,10 @@ function App() {
     },
   ]);
 
+  function updateEmployee (id, newName, newRole) {
+    console.log("updateEmployee inside of app.js")
+  }
+
   const showEmployees = true;
 
   return (

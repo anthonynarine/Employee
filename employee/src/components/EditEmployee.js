@@ -2,7 +2,11 @@ import { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 
-function EditEmployee() {
+function EditEmployee({name, role}) {
+
+  const [employeeName, setEmployeeName] = useState(name);
+  const [employeeRole, setEmployeeRole] = useState(role);
+
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
@@ -42,7 +46,10 @@ function EditEmployee() {
                   className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
                   id="name"
                   type="text"
-                  value="Jane Doe"
+                  value={employeeName}
+        //onChange will give us the ability to chage the name. above useState
+                  onChange={(e)=>{setEmployeeName(e.target.value)}}
+    
                 />
               </div>
             </div>
@@ -60,14 +67,14 @@ function EditEmployee() {
                   className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
                   id="role"
                   type="text"
-                  value="Jane Doe"
+                  value={employeeRole}
+                  onChange={(e)=>{setEmployeeRole(e.target.value)}}
                 />
               </div>
             </div>
           </form>
         </Modal.Body>
         <Modal.Footer>
-
           <button onClick={handleClose} className="bg-slate-400 hover:bg-slate-500 text-white font-bold py-2 px-4 rounded" >Close</button>
           <button form="editmodal" className="bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded" >Update</button>
         </Modal.Footer>

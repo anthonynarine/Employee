@@ -1,6 +1,7 @@
 import "./index";
 import Employee from "./components/Employee";
 import { useState } from "react";
+import AddEmployee from "./components/AddEmployee";
 // import {v4 as uuidv4} from "uuid" 
 
 function App() {
@@ -86,6 +87,7 @@ function App() {
               );
             })}
           </div>
+          <AddEmployee />
         </>
       ) : (
         <p> You cannot see the employees</p>

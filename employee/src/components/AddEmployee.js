@@ -2,9 +2,9 @@ import { useState } from "react";
 // import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 
-function EditEmployee(props) {
-  const [name, setName] = useState(props.name);
-  const [role, setRole] = useState(props.role);
+function AddEmployee(props) {
+  const [name, setName] = useState("");
+  const [role, setRole] = useState("");
 
   const [show, setShow] = useState(false);
 
@@ -23,9 +23,9 @@ function EditEmployee(props) {
     <>
       <button
         onClick={handleShow}
-        className="px-4 py-1 text-sm text-red-600 font-semibold rounded-full border border-purple-200 hover:text-white hover:bg-purple-600 hover:border-transparent focus:outline-none focus:ring-2 focus:ring-purple-600 focus:ring-offset-2"
+        className="block mx-auto bg-orange-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
       >
-        Edit
+        + Add Employee
       </button>
 
       <Modal
@@ -107,4 +107,4 @@ function EditEmployee(props) {
   );
 }
 
-export default EditEmployee;
+export default AddEmployee;

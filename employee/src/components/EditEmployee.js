@@ -1,16 +1,24 @@
 import { useState } from "react";
-import Button from "react-bootstrap/Button";
+// import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 
-function EditEmployee({name, role}) {
-
-  const [employeeName, setEmployeeName] = useState(name);
-  const [employeeRole, setEmployeeRole] = useState(role);
+function EditEmployee(props) {
+  const [name, setName] = useState(props.name);
+  const [role, setRole] = useState(props.role);
 
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+
+  function handleSubmit(event) {
+    event.preventDefault();
+    console.log("Hello from EditEmployee.js")
+    console.log( props.id, name, role );
+    props.updateEmployee(props.id, name, role);
+  }
+    //name and role represent the above state variables id comes from props array
+
 
   return (
     <>
@@ -31,7 +39,7 @@ function EditEmployee({name, role}) {
           <Modal.Title>Update Employee</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <form id="editmodal" className="w-full max-w-sm">
+          <form onSubmit={handleSubmit} id="editmodal" className="w-full max-w-sm">
             <div className="md:flex md:items-center mb-6">
               <div className="md:w-1/3">
                 <label
@@ -46,10 +54,11 @@ function EditEmployee({name, role}) {
                   className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
                   id="name"
                   type="text"
-                  value={employeeName}
-        //onChange will give us the ability to chage the name. above useState
-                  onChange={(e)=>{setEmployeeName(e.target.value)}}
-    
+                  value={name}
+                  //onChange will give us the ability to chage the name. above useState
+                  onChange={(e) => {
+                    setName(e.target.value);
+                  }}
                 />
               </div>
             </div>
@@ -67,16 +76,28 @@ function EditEmployee({name, role}) {
                   className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
                   id="role"
                   type="text"
-                  value={employeeRole}
-                  onChange={(e)=>{setEmployeeRole(e.target.value)}}
+                  value={role}
+                  onChange={(e) => {
+                    setRole(e.target.value);
+                  }}
                 />
               </div>
             </div>
           </form>
         </Modal.Body>
         <Modal.Footer>
-          <button onClick={handleClose} className="bg-slate-400 hover:bg-slate-500 text-white font-bold py-2 px-4 rounded" >Close</button>
-          <button form="editmodal" className="bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded" >Update</button>
+          <button
+            onClick={handleClose}
+            className="bg-slate-400 hover:bg-slate-500 text-white font-bold py-2 px-4 rounded"
+          >
+            Close
+          </button>
+          <button
+            form="editmodal"
+            className="bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded"
+          >
+            Update
+          </button>
         </Modal.Footer>
       </Modal>
     </>

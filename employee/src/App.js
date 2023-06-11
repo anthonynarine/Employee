@@ -4,6 +4,7 @@ import { useState } from "react";
 import AddEmployee from "./components/AddEmployee";
 import {v4 as uuidv4} from "uuid" 
 import EditEmployee from "./components/EditEmployee";
+import Header from "./components/Header";
 
 function App(props) {
   const [role, setRole] = useState("Physician");
@@ -75,10 +76,12 @@ function App(props) {
   const showEmployees = true;
 
   return (
-    <div className="App bg-slate-300 min-h-screen pb-10 pt-5">
+    //min-h-screen will give border to entire screen.
+    <div className="App bg-gray-300 min-h-screen ">
+      <Header />
       {showEmployees ? (
         <>
-          <div className="flex flex-wrap justify-center">
+          <div className="flex flex-wrap justify-center pt-2 " >
             {employees.map((employee) => {
               // console.log(employee);
               //the component EditEmployee is stored in the variable editEmployee which is a render of 

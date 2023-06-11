@@ -1,5 +1,4 @@
 import React from "react";
-import EditEmployee from "./EditEmployee";
 
 function Employee({ editEmployee, img, name, role }) {
   return (

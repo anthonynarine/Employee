@@ -11,6 +11,7 @@ function EditEmployee(props) {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
+  //this can be changed into a arrow func instaed of a traditional func. 
   function handleSubmit(event) {
     event.preventDefault();
     console.log("Hello from EditEmployee.js");

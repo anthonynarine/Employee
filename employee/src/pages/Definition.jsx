@@ -1,14 +1,21 @@
 import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
+import {v4 as uuidv4 } from "uuid" //uuid used in place of id since our data does not come with an id
 import axios from "axios";
 
 export default function Definition() {
   const [word, setWord] = useState();
 
-//using fetch api
+  let { search } = useParams();
+  console.log(useParams());
+
+
+  // using fetch api
   useEffect(() => {
     async function fetchDefinition() {
       const response = await fetch(
-        "https://api.dictionaryapi.dev/api/v2/entries/en/hello"
+        `https://api.dictionaryapi.dev/api/v2/entries/en/${search}`
+        // "https://api.dictionaryapi.dev/api/v2/entries/en/" + search (instead of using ``)
       );
       const data = await response.json();
       console.log("Fetched Data", data);
@@ -18,7 +25,7 @@ export default function Definition() {
     fetchDefinition();
   }, []);
 
-  // use effect using axios to fetch data. 
+  // use effect using axios to fetch data.
   // useEffect(() => {
   //   const getDefinition = async () => {
   //     try {
@@ -40,7 +47,12 @@ export default function Definition() {
 undefined, 0, empty string, false) the subsequent code inside will be executed) */}
       {word &&
         word.map((meaning) => {
-          return <p>{meaning.definitions[0].definition}</p>;
+          return (
+            <p key={uuidv4()}>
+              {meaning.partOfSpeech} : {" "} 
+              {meaning.definitions[0].definition}
+            </p>
+          );
         })}
     </>
   );

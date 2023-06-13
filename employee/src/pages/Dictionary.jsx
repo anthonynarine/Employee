@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 
 const Dictionary = () => {
   const [word, setWord] = useState("");
-  const [word2, setWord2] = useState("");
+  // const [word2, setWord2] = useState("");
 
   const handleWordChange = (event) => {
     setWord(event.target.value);

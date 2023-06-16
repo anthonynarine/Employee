@@ -16,7 +16,7 @@ function App() {
           <Route path="/employees" element={<Employees />} />
           <Route path="/customer" element={<Customer />} />
           <Route path="/dictionary" element={<Dictionary />} />
-          <Route path="/definition/:search" element={<Definition />} />
+          <Route path="/dictionary/:search" element={<Definition />} />
           <Route path="/useeffecttutorial" element={<UseEffecTutorial />} /> 
           <Route path="*" element={<ErrorPage />} />
           {/* path"*" is a catch all route. if no other defined routes matches path"*" will render */}

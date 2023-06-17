@@ -72,8 +72,7 @@ export default function Definition() {
   return (
     <>
       <h1>Here is a definition:</h1>
-{/* conditional that checks if "word" has a truthy value.if it is (not null, 
-undefined, 0, empty string, false) the subsequent code inside will be executed) */}
+{/* see notes below on the && operator for shorthand conditional rendering */}
       {word &&
         word.map((meaning) => {
           return (
@@ -87,3 +86,11 @@ undefined, 0, empty string, false) the subsequent code inside will be executed) 
     </>
   );
 }
+
+          // && operator
+// && operator is used to check if the data array is truthy 
+// (not null, undefined, empty, or false) before executing 
+// the map function. If data is truthy, the map function will
+//  be called, and <p> elements will be rendered for each item 
+//  in the array. If data is falsy (e.g., null or undefined), 
+//  the map function won't be called, and nothing will be rendered.

@@ -12,7 +12,7 @@ const Customers = () => {
     console.log("Fetching...");
     async function fetchCustomers() {
       try {
-        const url = baseUrl + "api/customers/" 
+        const url = baseUrl + "api/customers/";
         const response = await fetch(url);
         const data = await response.json();
         setCustomers(data.customers);
@@ -42,21 +42,23 @@ const Customers = () => {
   return (
     <>
       <h1>Here are our customers:</h1>
-{/* The ternary condtion checks if the customers data
+      {/* The ternary condtion checks if the customers data
 exist if it does will will run the map function if
 it does not it will return the paragraph see Definition component
 for short hand version   */}
-      {customers ? (
-        customers.map((customer) => {
-          return (
-            <p>
-              <Link to={"/customers/" + customer.id}>{customer.name}</Link>
-            </p>
-          );
-        })
-      ) : (
-        <p>No data available</p>
-      )}
+      <ul>
+        {customers ? (
+          customers.map((customer) => {
+            return (
+              <li key={customer.id}>
+                <Link to={"/customers/" + customer.id}>{customer.name}</Link>
+              </li>
+            );
+          })
+        ) : (
+          <p>No data available</p>
+        )}
+      </ul>
     </>
   );
 };

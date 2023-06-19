@@ -7,8 +7,12 @@ import AddCustomer from "../components/AddCustomer";
 
 const Customers = () => {
   const [customers, setCustomers] = useState();
+  const [showModal, setShowModal] = useState(false); //This state is passed as props to be used in AddCustomer
 
-  //using fetch api
+  function toggleShow(){
+    setShowModal(!showModal)
+  }
+  //using fetch api to get all customers
   useEffect(() => {
     console.log("Fetching...");
     async function fetchCustomers() {
@@ -25,7 +29,7 @@ const Customers = () => {
     fetchCustomers();
   }, []);
 
-  // using axios library
+  // using axios library to fetch all customers
   // useEffect(()=> {
   //   const fetchCustomersAxios = async () => {
   //     try {
@@ -40,8 +44,8 @@ const Customers = () => {
   //   fetchCustomersAxios()
   // }, [])
 
-  //function to add new customer. will be executed in AddCustomer comp.
   async function newCustomer(name, industry) {
+      //function to add new customer. will be executed in AddCustomer comp.
     const url = baseUrl + "api/customers/";
     const data = {
       name: name,
@@ -62,9 +66,12 @@ const Customers = () => {
 
       const responseData = await response.json();
       console.log("Created",responseData);
+
     } catch (error) {
       console.error("Error adding new customer", error);
-    }
+    } 
+    toggleShow();//func call will close the modal once customer is added
+    window.location.reload(); //reload page once the modal is closed   
   };
 
   //add new customer axios setup
@@ -103,7 +110,7 @@ for short hand version   */}
           <p>No data available</p>
         )}
       </ul>
-      <AddCustomer  newCustomer={newCustomer} />
+      <AddCustomer  newCustomer={newCustomer} showModal={showModal} toggleShow={toggleShow} />
     </>
   );
 };

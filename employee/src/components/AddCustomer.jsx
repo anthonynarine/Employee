@@ -2,35 +2,34 @@ import { useState } from "react";
 // import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 
-export default function AddCustomer({newCustomer, addCustomer}) {
+export default function AddCustomer({newCustomer, showModal, toggleShow}) {
   const [name, setName] = useState("");
   const [industry, setIndustry] = useState("");
+  const [show, setShow] = useState(showModal); //shoModal comes from Customers comp.
 
-  const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  // const handleShow = () => setShow(true);
 
   function handleSubmit(event) {
     event.preventDefault();
     //clearing the form data on submit
     setName("");
     setIndustry("");
-    // newCustomer(name, industry);
-    addCustomer(name, industry)
+    newCustomer(name, industry);
   }
   //name and role represent the above state variables id comes from props array
 
   return (
     <>
       <button
-        onClick={handleShow}
+        onClick={toggleShow}
         className="block mx-auto m-2 mb-8 bg-blue-500 hover:bg-purple-600 text-white font-bold py-2 px-4 rounded"
       >
         + Add Customer
       </button>
 
       <Modal
-        show={show}
+        show={showModal}
         onHide={handleClose}
         backdrop="static"
         keyboard={false}
@@ -115,14 +114,14 @@ export default function AddCustomer({newCustomer, addCustomer}) {
         </Modal.Body>
         <Modal.Footer>
           <button
-            onClick={handleClose}
+            onClick={toggleShow}
             className="bg-slate-400 hover:bg-slate-500 text-white font-bold py-2 px-4 rounded"
           >
             Close
           </button>
           <button
-            form="editmodal"
             className="bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded"
+            form="editmodal"
           >
             Add
           </button>

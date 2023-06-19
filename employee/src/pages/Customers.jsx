@@ -65,13 +65,14 @@ const Customers = () => {
       }
 
       const responseData = await response.json();
-      console.log("Created",responseData);
+      toggleShow();//func call will close the modal once customer is added
+      // window.location.reload(); reloads page once the modal is closed   
+      setCustomers([...customers, responseData.customer ]); //will also reload page via state update in the useEffect above
+      console.log("Created",responseData, );
 
     } catch (error) {
       console.error("Error adding new customer", error);
     } 
-    toggleShow();//func call will close the modal once customer is added
-    window.location.reload(); //reload page once the modal is closed   
   };
 
   //add new customer axios setup

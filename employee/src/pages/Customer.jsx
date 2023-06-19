@@ -3,6 +3,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { baseUrl } from "../shared";
 import axios from "axios";
 
+//fetching a single customper using the Id from the url
 export default function Customer() {
   const { id } = useParams();
   const [customer, setCustomer] = useState();
@@ -23,12 +24,16 @@ export default function Customer() {
     fetchCustomer();
   }, []);
 
-  // function with id of a customer you want to delete.
+  // function with id of a customer you want to delete using fetch api
   const deleteCustomerFetch = async () => {
     const url = baseUrl + "api/customers/" + id;
     try {
       const response = await fetch(url, {
         method: "DELETE",
+        //optional but is good practice is to add the content type with the request
+        headers: {
+          "Content-Type": "application/Json"
+        }
       });
       if (!response.ok) {
         //handle the case where the response status is not ok
@@ -44,11 +49,11 @@ export default function Customer() {
     }
   };
 
-  //Axios library delete functionality
+  // Axios library delete functionality
   // const deleteCustomerAxios = async () => {
   //   const url = `${baseUrl}api/customers/${id}`;
   //   try {
-  //     await axios.delete(url);
+  //     const response = await axios.delete(url);
   //     //handle the successful response
   //     console.log("Customer deleted successfully");
   //     navigate("/customers");

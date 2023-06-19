@@ -1,8 +1,9 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, json } from "react-router-dom";
 import axios from "axios";
 import { baseUrl } from "../shared";
+import AddCustomer from "../components/AddCustomer";
 
 const Customers = () => {
   const [customers, setCustomers] = useState();
@@ -39,6 +40,49 @@ const Customers = () => {
   //   fetchCustomersAxios()
   // }, [])
 
+  //function to add new customer. will be executed in AddCustomer comp.
+  async function newCustomer(name, industry) {
+    const url = baseUrl + "api/customers/";
+    const data = {
+      name: name,
+      industry: industry,
+    };
+    try {
+      const response = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to create Post");
+      }
+
+      const responseData = await response.json();
+      console.log("Created",responseData);
+    } catch (error) {
+      console.error("Error adding new customer", error);
+    }
+  };
+
+  //add new customer axios setup
+  // async function newCustomer(name, industry){
+  //   const url = baseUrl + "api/customers/";
+  //   const data = {
+  //     name: name,
+  //     industry: industry,
+  //   };
+  //   try {
+  //     const response = await axios.post(url, data);
+  //     console.log(response.data)
+      
+  //   } catch (error) {
+  //     console.error("Error", error) 
+  //   } 
+  // }
+
   return (
     <>
       <h1>Here are our customers:</h1>
@@ -59,6 +103,7 @@ for short hand version   */}
           <p>No data available</p>
         )}
       </ul>
+      <AddCustomer  newCustomer={newCustomer} />
     </>
   );
 };

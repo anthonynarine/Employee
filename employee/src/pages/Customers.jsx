@@ -44,7 +44,7 @@ const Customers = () => {
   //   fetchCustomersAxios()
   // }, [])
 
-  async function newCustomer(name, industry) {
+  async function addNewCustomer(name, industry) {
     //function to add new customer. will be executed in AddCustomer comp.
     const url = baseUrl + "api/customers/";
     const data = {
@@ -113,7 +113,7 @@ for short hand version   */}
         <p>No data available</p>
       )}
       <AddCustomer
-        newCustomer={newCustomer}
+        newCustomer={addNewCustomer}
         showModal={showModal}
         toggleShow={toggleShow}
       />

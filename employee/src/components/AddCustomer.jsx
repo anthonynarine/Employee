@@ -23,7 +23,7 @@ export default function AddCustomer({newCustomer, showModal, toggleShow}) {
     <>
       <button
         onClick={toggleShow}
-        className="block mx-auto m-2 mb-8 bg-blue-500 hover:bg-purple-600 text-white font-bold py-2 px-4 rounded"
+        className="block m-2 mb-8 bg-green-800 hover:bg-green-600 text-white font-bold py-2 px-4 rounded"
       >
         + Add Customer
       </button>

@@ -9,8 +9,8 @@ const Customers = () => {
   const [customers, setCustomers] = useState();
   const [showModal, setShowModal] = useState(false); //This state is passed as props to be used in AddCustomer
 
-  function toggleShow(){
-    setShowModal(!showModal)
+  function toggleShow() {
+    setShowModal(!showModal);
   }
   //using fetch api to get all customers
   useEffect(() => {
@@ -45,7 +45,7 @@ const Customers = () => {
   // }, [])
 
   async function newCustomer(name, industry) {
-      //function to add new customer. will be executed in AddCustomer comp.
+    //function to add new customer. will be executed in AddCustomer comp.
     const url = baseUrl + "api/customers/";
     const data = {
       name: name,
@@ -65,15 +65,14 @@ const Customers = () => {
       }
 
       const responseData = await response.json();
-      toggleShow();//func call will close the modal once customer is added
-      // window.location.reload(); reloads page once the modal is closed   
-      setCustomers([...customers, responseData.customer ]); //will also reload page via state update in the useEffect above
-      console.log("Created",responseData, );
-
+      toggleShow(); //func call will close the modal once customer is added
+      // window.location.reload(); reloads page once the modal is closed
+      setCustomers([...customers, responseData.customer]); //will also reload page via state update in the useEffect above
+      console.log("Created", responseData);
     } catch (error) {
       console.error("Error adding new customer", error);
-    } 
-  };
+    }
+  }
 
   //add new customer axios setup
   // async function newCustomer(name, industry){
@@ -85,10 +84,10 @@ const Customers = () => {
   //   try {
   //     const response = await axios.post(url, data);
   //     console.log(response.data)
-      
+
   //   } catch (error) {
-  //     console.error("Error", error) 
-  //   } 
+  //     console.error("Error", error)
+  //   }
   // }
 
   return (
@@ -98,20 +97,26 @@ const Customers = () => {
 exist if it does will will run the map function if
 it does not it will return the paragraph see Definition component
 for short hand version   */}
-      <ul>
-        {customers ? (
-          customers.map((customer) => {
-            return (
-              <li key={customer.id}>
-                <Link to={"/customers/" + customer.id}>{customer.name}</Link>
-              </li>
-            );
-          })
-        ) : (
-          <p>No data available</p>
-        )}
-      </ul>
-      <AddCustomer  newCustomer={newCustomer} showModal={showModal} toggleShow={toggleShow} />
+      {customers ? (
+        customers.map((customer) => {
+          return (
+            <div key={customer.id} className="m-2">
+              <Link to={"/customers/" + customer.id}>
+                <button className="bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4  mt-2 rounded">
+                  {customer.name}
+                </button>
+              </Link>
+            </div>
+          );
+        })
+      ) : (
+        <p>No data available</p>
+      )}
+      <AddCustomer
+        newCustomer={newCustomer}
+        showModal={showModal}
+        toggleShow={toggleShow}
+      />
     </>
   );
 };

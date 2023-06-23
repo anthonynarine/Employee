@@ -32,16 +32,16 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     
+    'rest_framework_simplejwt',
     "corsheaders",
-    "customers", 
     "rest_framework",
+    "customers", 
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    'rest_framework_simplejwt',
     
 ]
 
@@ -56,6 +56,11 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': ('rest_framework_simplejwt.authentication.JWTAuthentication',)
+}
+
 
 CORS_ALLOWED_ORIGINS = ["http://localhost:3000"]
 
@@ -132,14 +137,9 @@ STATIC_URL = "static/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-
-##########################<<<<START>>>##########################
-#               Djangorestframework simple jwt setup                 
+           
                                                                 
-REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': ('rest_framework_simplejwt.authentication.JWTAuthentication',)
-}                                                                  
 
-##########################<<<<END>>>##########################
+
 
 

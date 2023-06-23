@@ -1,16 +1,17 @@
 from customers.models import Customer
 from customers.serializers import CustomerSerializer
 from django.http import JsonResponse
-from rest_framework.decorators import api_view #tell us which methods are allowed Json, html and so on
+from rest_framework.decorators import api_view, permission_classes #tell us which methods are allowed Json, html and so on
 from rest_framework.response import Response
 from rest_framework import status
-
+from rest_framework.permissions import IsAuthenticated
 
 
 #function view to get all customers + create a new customer
     #invoke serializer and return to client
     #data is taken in, serialized and returned
-@api_view(["GET", "POST"])
+@api_view(["GET", "POST"]) #api view must be above permision classes
+@permission_classes([IsAuthenticated])
 def customers (request):
     if request.method == "GET":
         dbData = Customer.objects.all()
@@ -28,7 +29,8 @@ def customers (request):
         
      
 #function view to get, delete or update a single customer
-@api_view(["GET", "POST", "DELETE"])
+@api_view(["GET", "POST", "DELETE"]) #api view must be above permision classes
+@permission_classes([IsAuthenticated])
 def customer(request, id):
     try:
     #we specify which cusomer we want with the pk setting it = to the id 

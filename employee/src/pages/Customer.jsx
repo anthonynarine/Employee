@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { baseUrl } from "../shared";
 import axios from "axios";
-import { FiArrowLeft } from "react-icons/fi"
 
 //fetching a single customper using the Id from the url
 export default function Customer() {
@@ -27,6 +26,9 @@ export default function Customer() {
     async function fetchCustomer() {
       try {
         const response = await fetch(`${baseUrl}api/customers/${id}`);
+        if (response.status === 401){
+          navigate("/login")
+        }
         const data = await response.json();
         setCustomer(data.customer);
         setCustomerInfo(data.customer);

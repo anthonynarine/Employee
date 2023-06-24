@@ -8,12 +8,14 @@ import Customer from "./pages/Customer";
 import Dictionary from "./pages/Dictionary";
 import Definition from "./pages/Definition";
 import UseEffecTutorial from "./pages/UseEffecTutorial";
+import Login from "./pages/Login";
 
 function App() {
   return (
     <>
       <Header>
         <Routes>
+          <Route path="/login" element={<Login />} />
           <Route path="/employees" element={<Employees />} />
           <Route path="/customers" element={<Customers />} />
           <Route path="/customers/:id" element={<Customer />} />

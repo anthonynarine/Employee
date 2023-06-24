@@ -1,6 +1,6 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import { Link, json } from "react-router-dom";
+import { Link, json, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { baseUrl } from "../shared";
 import AddCustomer from "../components/AddCustomer";
@@ -9,40 +9,59 @@ const Customers = () => {
   const [customers, setCustomers] = useState();
   const [showModal, setShowModal] = useState(false); //This state is passed as props to be used in AddCustomer
 
+  const navigate = useNavigate();
+
   function toggleShow() {
     setShowModal(!showModal);
   }
-  //using fetch api to get all customers
-  useEffect(() => {
-    console.log("Fetching...");
-    async function fetchCustomers() {
-      try {
-        const url = baseUrl + "api/customers/";
-        const response = await fetch(url);
-        const data = await response.json();
-        setCustomers(data.customers);
-        console.log(data);
-      } catch (error) {
-        console.log(error);
-      }
-    }
-    fetchCustomers();
-  }, []);
 
-  // using axios library to fetch all customers
-  // useEffect(()=> {
-  //   const fetchCustomersAxios = async () => {
+  // using fetch api to get all customers with authorization headers
+  // useEffect(() => {
+  //   console.log("Fetching...");
+  //   async function fetchCustomers() {
   //     try {
-  //       let { data } = await axios.get("http://127.0.0.1:8000/api/customers/")
-  //       setCustomers(data.customers)
-  //       console.log(data)
-  //       console.log(data.customers)
+  //       const url = baseUrl + "api/customers/";
+  //       const response = await fetch(url, {
+  //         //GET requests is the default for fetch api the method is not needed here
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //           Authorization: `Bearer" ${localStorage.getItem("access")}` //acces is the key name that holds the acces token value - see api call in login page c.log(data) test
+  //         },
+  //       });
+  //       console.log(localStorage)
+  //       if (response.status === 401) {
+  //         navigate("/login");
+  //       }
+  //       const data = await response.json();
+  //       setCustomers(data.customers);
+  //       console.log(data);
   //     } catch (error) {
-  //       console.log(error)
+  //       console.log(error);
   //     }
   //   }
-  //   fetchCustomersAxios()
-  // }, [])
+  //   fetchCustomers();
+  // }, []);
+
+  useEffect(()=> {
+    const url = baseUrl + "api/customers/";
+    fetch(url, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + localStorage.getItem("access")
+      }
+    })
+    .then((response) => {
+      if (response.status === 401){
+        navigate("/login");
+      }
+      return response.json();
+    })
+    .then((data)=> {
+      setCustomers(data.customers)
+    })
+  },[])
+
+
 
   async function addNewCustomer(name, industry) {
     //function to add new customer. will be executed in AddCustomer comp.

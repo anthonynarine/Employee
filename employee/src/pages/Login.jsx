@@ -23,7 +23,7 @@ export default function Login() {
         }
         const data = await response.json();
         console.log(data)
-        localStorage.setItem("Access Token", data.access) //saves access token to local storage
+        localStorage.setItem("Access Token", data.access) //saves access token to local storage as key (Access Token) value pair (value is the token)
         localStorage.setItem("Refresh Token", data.refresh) //saves access token to local storage
         console.log(localStorage); // test to view data loal storage
     } catch (error) {

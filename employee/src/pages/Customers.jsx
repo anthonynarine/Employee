@@ -16,50 +16,52 @@ const Customers = () => {
   }
 
   // using fetch api to get all customers with authorization headers
-  // useEffect(() => {
-  //   console.log("Fetching...");
-  //   async function fetchCustomers() {
-  //     try {
-  //       const url = baseUrl + "api/customers/";
-  //       const response = await fetch(url, {
-  //         //GET requests is the default for fetch api the method is not needed here
-  //         headers: {
-  //           "Content-Type": "application/json",
-  //           Authorization: `Bearer" ${localStorage.getItem("access")}` //acces is the key name that holds the acces token value - see api call in login page c.log(data) test
-  //         },
-  //       });
-  //       console.log(localStorage)
-  //       if (response.status === 401) {
-  //         navigate("/login");
-  //       }
-  //       const data = await response.json();
-  //       setCustomers(data.customers);
-  //       console.log(data);
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   }
-  //   fetchCustomers();
-  // }, []);
+  useEffect(() => {
+    console.log("Fetching...");
+    async function fetchCustomers() {
+      try {
+        const url = baseUrl + "api/customers/";
+        const response = await fetch(url, {
+          //GET requests is the default for fetch api the method is not needed here
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("Access Token")}`  //acces is the key name that holds the acces token value - see api call in login page c.log(data) test
+            // NOTE THE SPACE AFTER Bearer is need or an unauthorized error will trigger. This applies if string contat is used as well
+            // Authorization: "Bearer "" localStorage.getItem("Access Token")  
+          },
+        });
+        console.log(localStorage)
+        if (response.status === 401) {
+          navigate("/login");
+        }
+        const data = await response.json();
+        setCustomers(data.customers);
+        console.log(data);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    fetchCustomers();
+  }, []);
 
-  useEffect(()=> {
-    const url = baseUrl + "api/customers/";
-    fetch(url, {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + localStorage.getItem("access")
-      }
-    })
-    .then((response) => {
-      if (response.status === 401){
-        navigate("/login");
-      }
-      return response.json();
-    })
-    .then((data)=> {
-      setCustomers(data.customers)
-    })
-  },[])
+  // useEffect(()=> {
+  //   const url = baseUrl + "api/customers/";
+  //   fetch(url, {
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //       Authorization: "Bearer " + localStorage.getItem("Access Token") //Key is passed in auth header (see login comp for token request setup)
+  //     }
+  //   })
+  //   .then((response) => {
+  //     if (response.status === 401){
+  //       navigate("/login");
+  //     }
+  //     return response.json();
+  //   })
+  //   .then((data)=> {
+  //     setCustomers(data.customers)
+  //   })
+  // },[])
 
 
 

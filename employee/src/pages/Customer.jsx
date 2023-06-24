@@ -24,8 +24,14 @@ export default function Customer() {
   useEffect(() => {
     console.log("fetching..");
     async function fetchCustomer() {
+      const url = `${baseUrl}api/customers/${id}`
       try {
-        const response = await fetch(`${baseUrl}api/customers/${id}`);
+        const response = await fetch(url, {
+          headers:{
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("Access Token")}`
+          },
+        });
         if (response.status === 401){
           navigate("/login")
         }
@@ -49,8 +55,12 @@ export default function Customer() {
         //optional but is good practice is to add the content type with the request
         headers: {
           "Content-Type": "application/Json",
+          Authorization: `Bearer ${localStorage.getItem("Access Token")}`
         },
       });
+      if(response.status === 401){
+        navigate("/login");
+      }
       if (!response.ok) {
         //handle the case where the response status is not ok
         throw new Error("Request failed with status");
@@ -91,14 +101,16 @@ export default function Customer() {
         method: "POST",
         headers: {
           "Content-Type": "application/Json",
+          Authorization: `Bearer ${localStorage.getItem("Access Token")}`
         },
         body: JSON.stringify(customerInfo),
       });
-
+      if(response.status === 401){
+        navigate("/login");
+      };
       if (!response.ok) {
         throw new Error("something went wrong");
-      }
-
+      };
       const responseData = await response.json();
       console.log("Customer Updated successfully", "New Data", responseData);
       setCustomer(responseData.customer);

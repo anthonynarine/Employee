@@ -116,6 +116,7 @@ export default function Customer() {
       setCustomer(responseData.customer);
       setChangedInfo(false);
       setError(undefined);
+      navigate("/customers");
     } catch (error) {
       //handle any errors that occurred during the fetch request
       setError(error.message);

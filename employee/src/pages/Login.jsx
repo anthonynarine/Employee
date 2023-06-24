@@ -1,8 +1,11 @@
 import { useState } from "react";
+import { Navigate, useNavigate } from "react-router-dom";
 
 export default function Login() {
   const [username, setUserName] = useState();
   const [password, setPassword] = useState();
+
+  const navigate = useNavigate();
 
   async function login(event){
     event.preventDefault();
@@ -26,6 +29,7 @@ export default function Login() {
         localStorage.setItem("Access Token", data.access) //saves access token to local storage as key (Access Token) value pair (value is the token)
         localStorage.setItem("Refresh Token", data.refresh) //saves access token to local storage
         console.log(localStorage); // test to view data loal storage
+        navigate("/customers/")
     } catch (error) {
         console.error("Error requesting Token auth")       
     }

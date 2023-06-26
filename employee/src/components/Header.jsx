@@ -11,6 +11,7 @@ const navigation = [
   { name: "Employees", href: "/Employees" },
   { name: "Customers", href: "/Customers" },
   { name: "Dictionary", href: "/Dictionary" },
+  { name: "Register", href: "/Register" },
 ];
 
 export function classNames(...classes) {

@@ -57,4 +57,8 @@ def customer(request, id):
         # the .is_valid method. if the serialzer is bad we return
         # the 400 as shown above
         
+        
+def register():
+    ...
+        
 

@@ -11,6 +11,7 @@ import Dictionary from "./pages/Dictionary";
 import Definition from "./pages/Definition";
 import Login from "./pages/Login";
 import { baseUrl } from "./shared";
+import Register from "./pages/Register";
 
 export const LoginContex = createContext(); //context defined
 
@@ -66,6 +67,7 @@ function App() {
         {/* //Context wraps all components; value available to all components */}
         <Header>
           <Routes>
+            <Route path="/register" element={<Register />} />
             <Route path="/login" element={<Login />} />
             <Route path="/employees" element={<Employees />} />
             <Route path="/customers" element={<Customers />} />

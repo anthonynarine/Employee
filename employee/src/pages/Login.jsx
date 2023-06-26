@@ -1,7 +1,11 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
+import { LoginContex } from "../App" 
 
 export default function Login() {
+
+  const [loggedIn, setLoggedIn] = useContext(LoginContex); //accessing loggedIn and setLogged in state from app.js via context
+
   const [username, setUserName] = useState();
   const [password, setPassword] = useState();
 
@@ -29,7 +33,8 @@ export default function Login() {
         localStorage.setItem("Access Token", data.access) //saves access token to local storage as key (Access Token) value pair (value is the token)
         localStorage.setItem("Refresh Token", data.refresh) //saves access token to local storage
         console.log(localStorage); // test to view data loal storage
-        navigate("/customers/")
+        setLoggedIn(true);
+        navigate("/customers/");
     } catch (error) {
         console.error("Error requesting Token auth")       
     }

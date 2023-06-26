@@ -1,16 +1,16 @@
 //This is a modified header from tailwind. it will wrap all routes (see app.js)
 //And render all wrapped compoenets as children (see end of component for render)
 
-import { Fragment } from "react";
+import { Fragment, useContext, useEffect } from "react";
 import { Disclosure } from "@headlessui/react";
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { NavLink } from "react-router-dom";
+import { LoginContex } from "../App"; // needed inport to access context
 
 const navigation = [
   { name: "Employees", href: "/Employees" },
   { name: "Customers", href: "/Customers" },
   { name: "Dictionary", href: "/Dictionary" },
-  { name: "Calendar", href: "/other2" },
 ];
 
 export function classNames(...classes) {
@@ -18,6 +18,8 @@ export function classNames(...classes) {
 }
 
 export default function Header({ children }) {
+  const [loggedIn, setLoggedIn] = useContext(LoginContex); //accessing context
+
   return (
     <>
       <Disclosure as="nav" className="bg-gray-800">
@@ -26,7 +28,7 @@ export default function Header({ children }) {
             <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
               <div className="relative flex h-14 items-center justify-between">
                 <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
-                  {/* Mobile menu button*/}
+{/* Mobile menu button*/}
                   <Disclosure.Button className="inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
                     <span className="sr-only">Open main menu</span>
                     {open ? (
@@ -67,6 +69,13 @@ export default function Header({ children }) {
                           {item.name}
                         </NavLink>
                       ))}
+{/* Login/logout link seperated from Navigation array for conditional rendering using contex */}
+                      <NavLink
+                        to={loggedIn ? "/logout" : "/login"}
+                        className="px-3 py-2 rounded-md text-sm text-gray-300 hover:bg-gray-700 hover:text-white font-medium no-underline"
+                      >
+                        {loggedIn ? "Logout" : "Login"}
+                      </NavLink>
                     </div>
                   </div>
                 </div>
@@ -101,13 +110,21 @@ export default function Header({ children }) {
                   </NavLink>
 // end of mobile nav link display
                 ))}
+                <NavLink
+                  to={loggedIn ? "/logout" : "/login"}
+                  className="px-3 py-2 rounded-md text-base text-gray-300 hover:bg-gray-700 hover:text-white font-medium no-underline"
+                >
+                  {loggedIn ? "Logout" : "Login"}
+                </NavLink>
               </div>
             </Disclosure.Panel>
           </>
         )}
       </Disclosure>
       <div className="bg-gray-300">
-      <div className="max-w-7xl mx-auto min-h-screen px-3 py-2" >{children}</div>
+        <div className="max-w-7xl mx-auto min-h-screen px-3 py-2">
+          {children}
+        </div>
       </div>
       <footer className="text-white">Example</footer>
     </>

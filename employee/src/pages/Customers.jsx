@@ -1,11 +1,14 @@
-import React from "react";
-import { useState, useEffect } from "react";
-import { Link, json, useNavigate } from "react-router-dom";
+import { useState, useEffect, useContext } from "react";
+import { LoginContex } from "../App";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { baseUrl } from "../shared";
 import AddCustomer from "../components/AddCustomer";
 
 const Customers = () => {
+
+  const [loggedIn, setLoggedIn] = useContext(LoginContex); //accessing loggedIn and setLogged in state from app.js via context
+
   const [customers, setCustomers] = useState();
   const [showModal, setShowModal] = useState(false); //This state is passed as props to be used in AddCustomer
 
@@ -32,6 +35,7 @@ const Customers = () => {
         });
         console.log(localStorage)
         if (response.status === 401) {
+          setLoggedIn(false);
           navigate("/login");
         }
         const data = await response.json();

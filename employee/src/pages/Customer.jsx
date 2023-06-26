@@ -1,13 +1,16 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { baseUrl } from "../shared";
 import axios from "axios";
+import { LoginContex } from "../App";
+
 
 //fetching a single customper using the Id from the url
 export default function Customer() {
   const { id } = useParams();
   const navigate = useNavigate();
-
+  const [loggedIn, setLoggedIn] = useContext(LoginContex); //accessing loggedIn and setLogged in state from app.js via context
+  
   const [customer, setCustomer] = useState();
   const [customerInfo, setCustomerInfo] = useState();
   const [changedInfo, setChangedInfo] = useState(false);
@@ -33,7 +36,8 @@ export default function Customer() {
           },
         });
         if (response.status === 401){
-          navigate("/login")
+          setLoggedIn(false);
+          navigate("/login");
         }
         const data = await response.json();
         setCustomer(data.customer);

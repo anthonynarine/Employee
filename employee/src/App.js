@@ -15,11 +15,21 @@ export const LoginContex = createContext(); //context defined
 
 function App() {
    
-  const [loggedIn, setLoggedIn] = useState(true);
+  //check localStorage for an access toke ---> may be expored
+  //logn term goal --> use refresh token and if it works, stay logged in, otherwise send to login page
+  const [loggedIn, setLoggedIn] = useState(localStorage.access ? true : false );
+
+  // function takes a value, that value is passed to setLoggedIn, if that value is false we clear localStorage
+  function changeLoggedIn(value){
+    setLoggedIn(value);
+    if (value === false){
+      localStorage.clear();
+    }
+  };
 
   return (
     <>   
-      <LoginContex.Provider value={[loggedIn, setLoggedIn ]}> {/* //Context wraps all components; value available to all components */}
+      <LoginContex.Provider value={[loggedIn, changeLoggedIn ]}> {/* //Context wraps all components; value available to all components */}
         <Header>
           <Routes>
             <Route path="/login" element={<Login />} />

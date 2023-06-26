@@ -9,7 +9,7 @@ import { LoginContex } from "../App";
 export default function Customer() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const [loggedIn, setLoggedIn] = useContext(LoginContex); //accessing loggedIn and setLogged in state from app.js via context
+  const [loggedIn, changeLoggedIn] = useContext(LoginContex); //accessing loggedIn and setLogged in state from app.js via context
   
   const [customer, setCustomer] = useState();
   const [customerInfo, setCustomerInfo] = useState();
@@ -32,11 +32,11 @@ export default function Customer() {
         const response = await fetch(url, {
           headers:{
             "Content-Type": "application/json",
-            Authorization: `Bearer ${localStorage.getItem("Access Token")}`
+            Authorization: `Bearer ${localStorage.getItem("accessToken")}`
           },
         });
         if (response.status === 401){
-          setLoggedIn(false);
+          changeLoggedIn(false);
           navigate("/login");
         }
         const data = await response.json();
@@ -59,7 +59,7 @@ export default function Customer() {
         //optional but is good practice is to add the content type with the request
         headers: {
           "Content-Type": "application/Json",
-          Authorization: `Bearer ${localStorage.getItem("Access Token")}`
+          Authorization: `Bearer ${localStorage.getItem("accessToken")}`
         },
       });
       if(response.status === 401){
@@ -105,7 +105,7 @@ export default function Customer() {
         method: "POST",
         headers: {
           "Content-Type": "application/Json",
-          Authorization: `Bearer ${localStorage.getItem("Access Token")}`
+          Authorization: `Bearer ${localStorage.getItem("accessToken")}`
         },
         body: JSON.stringify(customerInfo),
       });

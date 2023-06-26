@@ -7,7 +7,7 @@ import AddCustomer from "../components/AddCustomer";
 
 const Customers = () => {
 
-  const [loggedIn, setLoggedIn] = useContext(LoginContex); //accessing loggedIn and setLogged in state from app.js via context
+  const [loggedIn, changeLoggedIn] = useContext(LoginContex); //accessing loggedIn and setLogged in state from app.js via context
 
   const [customers, setCustomers] = useState();
   const [showModal, setShowModal] = useState(false); //This state is passed as props to be used in AddCustomer
@@ -28,14 +28,14 @@ const Customers = () => {
           //GET requests is the default for fetch api the method is not needed here
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${localStorage.getItem("Access Token")}`  //acces is the key name that holds the acces token value - see api call in login page c.log(data) test
+            Authorization: `Bearer ${localStorage.getItem("accessToken")}`  //acces is the key name that holds the acces token value - see api call in login page c.log(data) test
             // NOTE THE SPACE AFTER Bearer is need or an unauthorized error will trigger. This applies if string contat is used as well
-            // Authorization: "Bearer "" localStorage.getItem("Access Token")  
+            // Authorization: "Bearer "" localStorage.getItem("access")  
           },
         });
         console.log(localStorage)
         if (response.status === 401) {
-          setLoggedIn(false);
+          changeLoggedIn(false);
           navigate("/login");
         }
         const data = await response.json();
@@ -81,7 +81,7 @@ const Customers = () => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("Access Token")}` 
+          Authorization: `Bearer ${localStorage.getItem("accessToken")}` 
         },
         body: JSON.stringify(data),
       });

@@ -1,7 +1,7 @@
 //This is a modified header from tailwind. it will wrap all routes (see app.js)
 //And render all wrapped compoenets as children (see end of component for render)
 
-import { Fragment, useContext, useEffect } from "react";
+import { Fragment, useContext } from "react";
 import { Disclosure } from "@headlessui/react";
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { NavLink } from "react-router-dom";
@@ -18,7 +18,14 @@ export function classNames(...classes) {
 }
 
 export default function Header({ children }) {
-  const [loggedIn, setLoggedIn] = useContext(LoginContex); //accessing context
+  const [loggedIn, changeLoggedIn] = useContext(LoginContex); //accessing context
+
+  //will log user out and navigate back to the login page see ternary navlink below for func onClick func call
+  let logOut = () => {
+    console.log("logging out...");
+    changeLoggedIn(false);
+    localStorage.clear();
+  };
 
   return (
     <>
@@ -28,7 +35,7 @@ export default function Header({ children }) {
             <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
               <div className="relative flex h-14 items-center justify-between">
                 <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
-{/* Mobile menu button*/}
+                  {/* Mobile menu button*/}
                   <Disclosure.Button className="inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
                     <span className="sr-only">Open main menu</span>
                     {open ? (
@@ -69,13 +76,23 @@ export default function Header({ children }) {
                           {item.name}
                         </NavLink>
                       ))}
-{/* Login/logout link seperated from Navigation array for conditional rendering using contex */}
-                      <NavLink
-                        to={loggedIn ? "/logout" : "/login"}
-                        className="px-3 py-2 rounded-md text-sm text-gray-300 hover:bg-gray-700 hover:text-white font-medium no-underline"
-                      >
-                        {loggedIn ? "Logout" : "Login"}
-                      </NavLink>
+                      {/* Login/logout link seperated from Navigation array for conditional rendering using contex */}
+                      {loggedIn ? (
+                        <NavLink
+                          to={"/login"}
+                          onClick={logOut}
+                          className="px-3 py-2 rounded-md text-sm text-gray-300 hover:bg-gray-700 hover:text-white font-medium no-underline"
+                        >
+                          Logout
+                        </NavLink>
+                      ) : (
+                        <NavLink
+                          to={"/login"}
+                          className="px-3 py-2 rounded-md text-sm text-gray-300 hover:bg-gray-700 hover:text-white font-medium no-underline"
+                        >
+                          Login
+                        </NavLink>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -90,7 +107,7 @@ export default function Header({ children }) {
                 </div>
               </div>
             </div>
-{/* Mobile nav link display */}
+            {/* Mobile nav link display */}
             <Disclosure.Panel className="sm:hidden">
               <div className="space-y-1 px-2 pb-3 pt-2">
                 {navigation.map((item) => (
@@ -108,14 +125,24 @@ export default function Header({ children }) {
                   >
                     {item.name}
                   </NavLink>
-// end of mobile nav link display
+                  // end of mobile nav link display
                 ))}
-                <NavLink
-                  to={loggedIn ? "/logout" : "/login"}
-                  className="px-3 py-2 rounded-md text-base text-gray-300 hover:bg-gray-700 hover:text-white font-medium no-underline"
-                >
-                  {loggedIn ? "Logout" : "Login"}
-                </NavLink>
+                {loggedIn ? (
+                  <NavLink
+                    to={"/login"}
+                    onClick={logOut}
+                    className="px-3 py-2 rounded-md text-sm text-gray-300 hover:bg-gray-700 hover:text-white font-medium no-underline"
+                  >
+                    Logout
+                  </NavLink>
+                ) : (
+                  <NavLink
+                    to={"/login"}
+                    className="px-3 py-2 rounded-md text-sm text-gray-300 hover:bg-gray-700 hover:text-white font-medium no-underline"
+                  >
+                    Login
+                  </NavLink>
+                )}
               </div>
             </Disclosure.Panel>
           </>
